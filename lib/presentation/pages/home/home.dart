@@ -1,21 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myapp/core/riverpod/riverpod.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
 import 'single_choice_selection.dart';
 import '../../popups/profile/profile.dart';
 
-class Home extends StatelessWidget {
-  static const name = "Otis Lammertyn";
-
-  static const int currentIntake = 110;
-  static const int goalIntake = 150;
-  static const double percentageIntake = currentIntake / goalIntake;
-  final int roundPercentageIntake = (percentageIntake * 100).round();
-
+class Home extends ConsumerWidget {
   Home({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
         title: Row(
@@ -30,11 +25,11 @@ class Home extends StatelessWidget {
               },
             ),
             const SizedBox(width: 15),
-            const Column(
+            Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Welcome Back", style: TextStyle(fontSize: 12)),
-                Text(name),
+                const Text("Welcome Back", style: TextStyle(fontSize: 12)),
+                Text(ref.watch(userData).name.toString()),
               ],
             ),
           ],
@@ -48,18 +43,20 @@ class Home extends StatelessWidget {
                 radius: 150.0,
                 lineWidth: 10.0,
                 animation: true,
-                percent: percentageIntake,
+                percent: ref.watch(proteins).percentageIntake.toDouble(),
                 center: Column(
                   children: [
                     const SizedBox(height: 110),
-                    Text("$roundPercentageIntake%",
+                    Text(
+                        "${ref.watch(proteins).roundPercentageIntake.toInt()}%",
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 40,
                         )),
                     GestureDetector(
-                      child: const Text("$currentIntake of $goalIntake grams",
-                          style: TextStyle(
+                      child: Text(
+                          "${ref.watch(proteins).currentIntake.toInt()} of ${ref.watch(proteins).goalIntake.toInt()} grams",
+                          style: const TextStyle(
                             fontWeight: FontWeight.bold,
                           )),
                       onTap: () {
