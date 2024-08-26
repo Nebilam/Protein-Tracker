@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:myapp/core/navbar/nav_bar.dart';
 import 'package:myapp/main.dart';
+
+import '../login/login_page.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -21,9 +24,11 @@ class _SplashPageState extends State<SplashPage> {
 
     if (!mounted) return;
     if (session != null) {
-      Navigator.of(context).pushReplacementNamed('/account');
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => const HomePage()));
     } else {
-      Navigator.of(context).pushReplacementNamed('/login');
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => const LoginPage()));
     }
   }
 
