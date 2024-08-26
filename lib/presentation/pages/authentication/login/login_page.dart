@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:myapp/main.dart';
-import 'package:passwordfield/passwordfield.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../../common/widgets/input_fields/input_field.dart';
