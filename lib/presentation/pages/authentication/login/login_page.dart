@@ -2,9 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:myapp/main.dart';
-import 'package:myapp/presentation/pages/authentication/account/account_page.dart';
+import 'package:passwordfield/passwordfield.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../../common/widgets/input_fields/input_field.dart';
+import '../../../../common/widgets/input_fields/password_field.dart';
 import '../../../../core/navbar/nav_bar.dart';
 
 class LoginPage extends StatefulWidget {
@@ -15,7 +17,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final _emailController = TextEditingController();
+  final emailField = InputField(hint: 'Email');
+  final passwordField = PasswordInputField(hint: 'Password');
   late final StreamSubscription<AuthState> _authSubscription;
 
   @override
@@ -24,6 +27,7 @@ class _LoginPageState extends State<LoginPage> {
     _authSubscription = supabase.auth.onAuthStateChange.listen((event) {
       final session = event.session;
       if (session != null) {
+        // ignore: use_build_context_synchronously
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: (context) => const HomePage(),
@@ -35,7 +39,6 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void dispose() {
-    _emailController.dispose();
     _authSubscription.cancel();
     super.dispose();
   }
@@ -50,24 +53,22 @@ class _LoginPageState extends State<LoginPage> {
         body: ListView(
           padding: const EdgeInsets.all(12),
           children: [
-            TextFormField(
-                controller: _emailController,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(20))),
-                  hintText: "Email",
-                )),
+            emailField,
+            const SizedBox(height: 12),
+            passwordField,
             const SizedBox(height: 12),
             ElevatedButton(
               onPressed: () async {
                 try {
-                  final email = _emailController.text.trim();
-                  await supabase.auth.signInWithOtp(
-                    email: email,
-                    emailRedirectTo:
-                        'io.supabase.flutterquickstart://login-callback/',
-                  );
+                  final email = emailField.controller.text.trim();
+                  final password = passwordField.passwordController.text;
+                  await supabase.auth.signUp(
+                      email: email,
+                      password: password,
+                      emailRedirectTo:
+                          'io.supabase.flutterquickstart://login-callback/');
                   if (mounted) {
+                    // ignore: use_build_context_synchronously
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
                         content: Text('Check your inbox'),
@@ -75,16 +76,20 @@ class _LoginPageState extends State<LoginPage> {
                     );
                   }
                 } on AuthException catch (error) {
+                  // ignore: use_build_context_synchronously
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text(error.message),
+                      // ignore: use_build_context_synchronously
                       backgroundColor: Theme.of(context).colorScheme.error,
                     ),
                   );
                 } catch (error) {
+                  // ignore: use_build_context_synchronously
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: const Text('Error occured, please retry.'),
+                      // ignore: use_build_context_synchronously
                       backgroundColor: Theme.of(context).colorScheme.error,
                     ),
                   );

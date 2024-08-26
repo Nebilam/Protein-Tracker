@@ -70,7 +70,7 @@ class Home extends ConsumerWidget {
                   ],
                 ),
                 circularStrokeCap: CircularStrokeCap.round,
-                progressColor: Theme.of(context).colorScheme.inversePrimary),
+                progressColor: Theme.of(context).colorScheme.primary),
           ),
           const SizedBox(
             height: 30,

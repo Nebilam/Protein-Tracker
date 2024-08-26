@@ -5,7 +5,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:myapp/presentation/pages/authentication/splash/splash_page.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'core/navbar/nav_bar.dart';
 
 void main() async {
   await Supabase.initialize(
