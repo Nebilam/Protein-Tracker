@@ -1,8 +1,8 @@
 // ignore_for_file: prefer_const_constructors
-import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
+import 'package:myapp/core/theme/theme.dart';
 import 'package:myapp/presentation/pages/authentication/splash/splash_page.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -20,27 +20,11 @@ final supabase = Supabase.instance.client;
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-  static final _defaultLightColorScheme =
-      ColorScheme.fromSwatch(primarySwatch: Colors.blue);
-
-  static final _defaultDarkColorScheme = ColorScheme.fromSwatch(
-      primarySwatch: Colors.blue, brightness: Brightness.dark);
 
   @override
   Widget build(BuildContext context) {
-    return DynamicColorBuilder(builder: (lightColorScheme, darkColorScheme) {
-      return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            colorScheme: lightColorScheme ?? _defaultLightColorScheme,
-            fontFamily: 'Nunito',
-          ),
-          darkTheme: ThemeData(
-            colorScheme: darkColorScheme ?? _defaultDarkColorScheme,
-            fontFamily: 'Nunito',
-          ),
-          themeMode: ThemeMode.dark,
-          home: const SplashPage());
-    });
+    return ThemedMaterialApp(
+      home: const SplashPage(),
+    );
   }
 }

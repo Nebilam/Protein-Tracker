@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/core/navbar/nav_bar.dart';
 import 'package:myapp/main.dart';
-
-import '../login/login_page.dart';
+import 'package:myapp/presentation/pages/authentication/login_signup/login_page.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});

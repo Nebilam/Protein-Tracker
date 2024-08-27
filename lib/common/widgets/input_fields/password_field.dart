@@ -12,7 +12,7 @@ class PasswordInputField extends StatelessWidget {
     return PasswordField(
       color: Colors.blue,
       controller: passwordController,
-      passwordConstraint: r'.{4,}',
+      passwordConstraint: r'.{6,}',
       passwordDecoration: PasswordDecoration(),
       hintText: 'Password',
       border: PasswordBorder(
@@ -30,7 +30,7 @@ class PasswordInputField extends StatelessWidget {
           borderSide: BorderSide(width: 2, color: Colors.red.shade200),
         ),
       ),
-      errorMessage: 'must contain 4 characters or more',
+      errorMessage: 'must contain 6 characters or more',
       hasFloatingPlaceholder: true,
     );
   }
