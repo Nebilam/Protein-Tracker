@@ -23,11 +23,11 @@ class _SplashPageState extends State<SplashPage> {
 
     if (!mounted) return;
     if (session != null) {
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => const HomePage()));
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => const HomePage()));
     } else {
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => const LoginPage()));
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => const LoginPage()));
     }
   }
 

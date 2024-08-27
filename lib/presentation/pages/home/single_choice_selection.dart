@@ -144,17 +144,7 @@ class _SingleChoiceState extends State<SingleChoice> {
         ),
         Expanded(
           child: IntakeList(
-            intake: () {
-              if (meal == Meals.breakfast) {
-                return breakfast;
-              } else if (meal == Meals.lunch) {
-                return lunch;
-              } else if (meal == Meals.dinner) {
-                return dinner;
-              } else {
-                return snacks;
-              }
-            }(),
+            intake: meal,
           ),
         ),
       ],

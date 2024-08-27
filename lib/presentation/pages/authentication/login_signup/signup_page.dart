@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:myapp/common/widgets/buttons/text_button.dart';
 import 'package:myapp/main.dart';
 import 'package:myapp/presentation/pages/authentication/login_signup/login_page.dart';
 import 'package:myapp/presentation/pages/authentication/login_signup/token_page.dart';
@@ -52,15 +53,22 @@ class _SignUpState extends State<SignUp> {
           automaticallyImplyLeading: false,
         ),
         body: Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.symmetric(vertical: 20),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              emailField,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: emailField,
+              ),
               const SizedBox(height: 12),
-              passwordField,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: passwordField,
+              ),
               const SizedBox(height: 12),
-              ElevatedButton(
+              ButtonText(
+                text: 'Sign Up',
                 onPressed: () async {
                   try {
                     final email = emailField.controller.text.trim();
@@ -102,33 +110,16 @@ class _SignUpState extends State<SignUp> {
                     );
                   }
                 },
-                child: const Text('Sign Up'),
               ),
-              const SizedBox(height: 12),
-              Center(
-                child: GestureDetector(
-                  child: RichText(
-                    text: const TextSpan(
-                      text: "Do you have an account? ",
-                      style: TextStyle(fontFamily: 'Nunito'),
-                      children: <TextSpan>[
-                        TextSpan(
-                          text: 'Sign in',
-                          style: TextStyle(
-                            color: Colors.blue,
-                            fontFamily: 'Nunito',
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const LoginPage()));
-                  },
-                ),
+              ButtonText(
+                text: 'Sign In',
+                style: Style.secondary,
+                onPressed: () {
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const LoginPage()));
+                },
               ),
             ],
           ),

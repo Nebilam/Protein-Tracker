@@ -7,7 +7,7 @@ import 'single_choice_selection.dart';
 import '../../popups/profile/profile.dart';
 
 class Home extends ConsumerWidget {
-  Home({super.key});
+  const Home({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

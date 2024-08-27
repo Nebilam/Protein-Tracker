@@ -7,6 +7,7 @@ import 'package:myapp/main.dart';
 import 'package:myapp/presentation/pages/authentication/login_signup/signup_page.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../../common/widgets/buttons/text_button.dart';
 import '../../../../common/widgets/input_fields/input_field.dart';
 
 class LoginPage extends StatefulWidget {
@@ -47,15 +48,22 @@ class _LoginPageState extends State<LoginPage> {
         automaticallyImplyLeading: false,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding: const EdgeInsets.symmetric(vertical: 20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            emailField,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: emailField,
+            ),
             const SizedBox(height: 12),
-            passwordField,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: passwordField,
+            ),
             const SizedBox(height: 12),
-            ElevatedButton(
+            ButtonText(
+              text: "Sign In",
               onPressed: () async {
                 try {
                   await supabase.auth.signInWithPassword(
@@ -82,40 +90,14 @@ class _LoginPageState extends State<LoginPage> {
                   );
                 }
               },
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: Theme.of(context).colorScheme.inversePrimary,
-                ),
-                child: const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 13),
-                  child: Center(child: Text('Login')),
-                ),
-              ),
             ),
-            const SizedBox(height: 12),
-            Center(
-              child: GestureDetector(
-                child: RichText(
-                  text: const TextSpan(
-                    text: "Don't have an account? ",
-                    style: TextStyle(fontFamily: 'Nunito'),
-                    children: <TextSpan>[
-                      TextSpan(
-                        text: 'Sign up',
-                        style: TextStyle(
-                          color: Colors.blue,
-                          fontFamily: 'Nunito',
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const SignUp()));
-                },
-              ),
+            ButtonText(
+              text: "Sign Up",
+              style: Style.secondary,
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const SignUp()));
+              },
             ),
           ],
         ),

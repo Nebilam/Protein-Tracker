@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myapp/common/widgets/buttons/text_button.dart';
 import 'package:myapp/core/riverpod/riverpod.dart';
 
 class Profile extends ConsumerWidget {
@@ -11,11 +12,22 @@ class Profile extends ConsumerWidget {
         appBar: AppBar(
           title: const Text("Profile Settings"),
         ),
-        body: ElevatedButton.icon(
-          onPressed: () {
-            ref.read(proteins).incrementFunc(increment: 1);
-          },
-          label: const Text("Remove"),
+        body: Column(
+          children: [
+            ElevatedButton.icon(
+              onPressed: () {
+                ref.read(proteins).incrementFunc(increment: 1);
+              },
+              label: const Text("Remove"),
+            ),
+            Text("${ref.watch(mealData).lunchData}"),
+            ButtonText(
+                text: "Get Profile",
+                onPressed: () {
+                  ref.read(mealData).getLunchData();
+                  ref.read(mealData);
+                }),
+          ],
         ));
   }
 }

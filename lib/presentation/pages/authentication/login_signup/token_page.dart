@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myapp/common/widgets/buttons/text_button.dart';
 import 'package:myapp/main.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -17,11 +18,15 @@ class TokenPage extends StatelessWidget {
         title: const Text('Token Page'),
       ),
       body: ListView(
-        padding: const EdgeInsets.all(12),
+        padding: const EdgeInsets.symmetric(vertical: 20),
         children: [
-          tokenField,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: tokenField,
+          ),
           const SizedBox(height: 12),
-          ElevatedButton(
+          ButtonText(
+            text: "Verify sign up",
             onPressed: () async {
               try {
                 await supabase.auth.verifyOTP(
@@ -49,7 +54,6 @@ class TokenPage extends StatelessWidget {
                 );
               }
             },
-            child: const Text('Verify token'),
           ),
         ],
       ),
