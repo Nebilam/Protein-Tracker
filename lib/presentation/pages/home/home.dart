@@ -7,12 +7,13 @@ import 'single_choice_selection.dart';
 import '../../popups/profile/profile.dart';
 
 class Home extends ConsumerWidget {
-  Home({super.key});
+  const Home({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Row(
           children: [
             GestureDetector(
@@ -69,7 +70,7 @@ class Home extends ConsumerWidget {
                   ],
                 ),
                 circularStrokeCap: CircularStrokeCap.round,
-                progressColor: Theme.of(context).colorScheme.inversePrimary),
+                progressColor: Theme.of(context).colorScheme.primary),
           ),
           const SizedBox(
             height: 30,

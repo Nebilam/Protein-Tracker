@@ -1,16 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myapp/core/riverpod/riverpod.dart';
+import 'package:myapp/presentation/pages/home/single_choice_selection.dart';
 
-class IntakeList extends StatelessWidget {
-  final List intake;
+class IntakeList extends ConsumerWidget {
+  final Meals intake;
 
   const IntakeList({super.key, required this.intake});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    List<dynamic> intakeList = [];
+    if (intake == Meals.breakfast) {
+      intakeList = ref.watch(mealData).breakfastData;
+    } else if (intake == Meals.lunch) {
+      intakeList = ref.watch(mealData).lunchData;
+    }
+    // } else if (intake == Meals.dinner) {
+    //   intakeList = ref.watch(dinnerData).dinnerData;
+    // } else if (intake == Meals.snacks) {
+    //   intakeList = ref.watch(snacksData).snacksData;
+    // }
     return ListView.builder(
-      itemCount: intake.length,
+      itemCount: intakeList.length,
       itemBuilder: (context, index) {
-        final item = intake[index];
+        final item = intakeList[index];
         List<Widget> subtitles = [];
 
         item.forEach((key, value) {

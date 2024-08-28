@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myapp/common/widgets/buttons/text_button.dart';
 import 'package:myapp/core/riverpod/riverpod.dart';
 
 class Profile extends ConsumerWidget {

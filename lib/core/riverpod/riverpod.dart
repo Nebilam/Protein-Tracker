@@ -10,3 +10,7 @@ final proteins = ChangeNotifierProvider<Proteins>((ref) {
 final userData = ChangeNotifierProvider<UserData>((ref) {
   return UserData(name: "Otis Lammertyn", weight: 63.7);
 });
+
+final mealData = ChangeNotifierProvider<MealData>((ref) {
+  return MealData();
+});
