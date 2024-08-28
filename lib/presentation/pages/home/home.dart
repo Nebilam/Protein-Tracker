@@ -30,7 +30,15 @@ class Home extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text("Welcome Back", style: TextStyle(fontSize: 12)),
-                Text(ref.watch(userData).name.toString()),
+                FutureBuilder(
+                    future: ref.watch(userData).userName,
+                    builder: (context, snapshot) {
+                      if (!snapshot.hasData) {
+                        return const Center(child: CircularProgressIndicator());
+                      }
+                      final name = snapshot.data!;
+                      return Text(name[0]['username'].toString());
+                    }),
               ],
             ),
           ],

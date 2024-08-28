@@ -24,8 +24,9 @@ class Profile extends ConsumerWidget {
             ButtonText(
                 text: "Get Profile",
                 onPressed: () {
-                  ref.read(mealData).getLunchData();
-                  ref.read(mealData);
+                  ref.read(userData).updateName("Otis Lammertyn");
+                  // ignore: unused_result
+                  ref.refresh(userData);
                 }),
           ],
         ));

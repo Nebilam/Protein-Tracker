@@ -21,38 +21,30 @@ class Proteins extends ChangeNotifier {
 }
 
 class UserData extends ChangeNotifier {
-  String name;
-  double weight;
+  final userId = supabase.auth.currentUser!.id;
 
-  UserData({required this.name, required this.weight});
+  void updateName(String newName) async {
+    await supabase
+        .from('profiles')
+        .update({'username': newName}).eq('id', userId);
+  }
+
+  late final userName =
+      supabase.from('profiles').select('username').eq('id', userId);
+
+  UserData();
 }
 
 class MealData extends ChangeNotifier {
   final userId = supabase.auth.currentUser!.id;
-  late List<dynamic> breakfastData = [];
 
-  Future<List<dynamic>> getBreakfastData() async {
-    final response =
-        await supabase.from('breakfast').select('*').eq('user_id', userId);
-    return response as List<dynamic>;
-  }
-
-  late List<dynamic> lunchData = [];
-
-  Future<List<dynamic>> getLunchData() async {
-    final response =
-        await supabase.from('lunch').select('*').eq('user_id', userId);
-    return response as List<dynamic>;
-  }
-
-  MealData() {
-    getBreakfastData().then((data) {
-      breakfastData = data;
-      notifyListeners();
-    });
-    getLunchData().then((data) {
-      lunchData = data;
-      notifyListeners();
-    });
-  }
+  late final breakfastData =
+      supabase.from('breakfast').select('*').eq('user_id', userId);
+  late final lunchData =
+      supabase.from('lunch').select('*').eq('user_id', userId);
+  late final dinnerData =
+      supabase.from('dinner').select('*').eq('user_id', userId);
+  late final snacksData =
+      supabase.from('snacks').select('*').eq('user_id', userId);
+  MealData();
 }
