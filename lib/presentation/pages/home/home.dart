@@ -11,6 +11,14 @@ class Home extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    if (ref.watch(userData).newUser) {
+      ref.read(userData).updateName(ref.watch(userData).newUserName);
+      ref.read(userData).setNewUserFalse();
+    }
+    // ignore: unused_result
+    ref.refresh(mealData);
+    // ignore: unused_result
+    ref.refresh(userData);
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -36,6 +44,7 @@ class Home extends ConsumerWidget {
                       if (!snapshot.hasData) {
                         return const Center(child: CircularProgressIndicator());
                       }
+                      print(snapshot.data);
                       final name = snapshot.data!;
                       return Text(name[0]['username'].toString());
                     }),

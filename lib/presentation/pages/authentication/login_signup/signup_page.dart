@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myapp/common/widgets/buttons/text_button.dart';
+import 'package:myapp/core/riverpod/riverpod.dart';
 import 'package:myapp/main.dart';
 import 'package:myapp/presentation/pages/authentication/login_signup/login_page.dart';
 import 'package:myapp/presentation/pages/authentication/login_signup/token_page.dart';
@@ -11,14 +13,15 @@ import '../../../../common/widgets/input_fields/input_field.dart';
 import '../../../../common/widgets/input_fields/password_field.dart';
 import '../../../../core/navbar/nav_bar.dart';
 
-class SignUp extends StatefulWidget {
+class SignUp extends ConsumerStatefulWidget {
   const SignUp({super.key});
 
   @override
-  State<SignUp> createState() => _SignUpState();
+  ConsumerState<SignUp> createState() => _SignUpState();
 }
 
-class _SignUpState extends State<SignUp> {
+class _SignUpState extends ConsumerState<SignUp> {
+  final userNameField = InputField(hint: 'Username');
   final emailField = InputField(hint: 'Email');
   final passwordField = PasswordInputField(hint: 'Password');
   late final StreamSubscription<AuthState> _authSubscription;
@@ -59,6 +62,11 @@ class _SignUpState extends State<SignUp> {
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: userNameField,
+              ),
+              const SizedBox(height: 12),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: emailField,
               ),
               const SizedBox(height: 12),
@@ -71,6 +79,10 @@ class _SignUpState extends State<SignUp> {
                 text: 'Sign Up',
                 onPressed: () async {
                   try {
+                    final username = userNameField.controller.text;
+                    ref
+                        .read(userData)
+                        .setNewUserTrue(userNameField.controller.text);
                     final email = emailField.controller.text.trim();
                     final password = passwordField.passwordController.text;
                     await supabase.auth.signUp(
@@ -103,7 +115,7 @@ class _SignUpState extends State<SignUp> {
                     // ignore: use_build_context_synchronously
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                        content: const Text('Error occured, please retry.'),
+                        content: Text(error.toString()),
                         // ignore: use_build_context_synchronously
                         backgroundColor: Theme.of(context).colorScheme.error,
                       ),

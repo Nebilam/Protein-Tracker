@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myapp/common/widgets/buttons/text_button.dart';
+import 'package:myapp/core/riverpod/riverpod.dart';
 import 'package:myapp/main.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../../common/widgets/input_fields/input_field.dart';
 
-class TokenPage extends StatelessWidget {
+class TokenPage extends ConsumerWidget {
   final tokenField = InputField(hint: 'Token');
   final String email;
 
   TokenPage({super.key, required this.email});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Token Page'),
@@ -29,6 +31,7 @@ class TokenPage extends StatelessWidget {
             text: "Verify sign up",
             onPressed: () async {
               try {
+                ref.watch(userData).newUser = true;
                 await supabase.auth.verifyOTP(
                   email: email,
                   token: tokenField.controller.text,
