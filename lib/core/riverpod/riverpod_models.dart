@@ -46,5 +46,6 @@ class MealData extends ChangeNotifier {
       supabase.from('dinner').select('*').eq('user_id', userId);
   late final snacksData =
       supabase.from('snacks').select('*').eq('user_id', userId);
+
   MealData();
 }
