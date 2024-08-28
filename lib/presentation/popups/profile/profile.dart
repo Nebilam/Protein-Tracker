@@ -8,14 +8,22 @@ class Profile extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("Profile Settings"),
+      appBar: AppBar(
+        title: const Text("Profile Settings"),
+      ),
+      body: const Padding(
+        padding: EdgeInsets.all(120.0),
+        child: Center(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              CircleAvatar(
+                radius: 100,
+              ),
+            ],
+          ),
         ),
-        body: ElevatedButton.icon(
-          onPressed: () {
-            ref.read(proteins).incrementFunc(increment: 1);
-          },
-          label: const Text("Remove"),
-        ));
+      ),
+    );
   }
 }
