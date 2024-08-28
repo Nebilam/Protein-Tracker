@@ -11,8 +11,8 @@ class ButtonText extends StatelessWidget {
 
   const ButtonText({
     super.key,
-    required this.onPressed,
     required this.text,
+    required this.onPressed,
     this.horizontalPadding = 10,
     this.verticalPadding = 13,
     this.style = Style.primary,
