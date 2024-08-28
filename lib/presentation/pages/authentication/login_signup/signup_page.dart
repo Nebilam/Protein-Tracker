@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myapp/common/widgets/buttons/text_button.dart';
 import 'package:myapp/main.dart';
+import 'package:myapp/presentation/pages/authentication/account/acount_page.dart';
 import 'package:myapp/presentation/pages/authentication/login_signup/login_page.dart';
 import 'package:myapp/presentation/pages/authentication/login_signup/token_page.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../../common/widgets/input_fields/input_field.dart';
 import '../../../../common/widgets/input_fields/password_field.dart';
-import '../../../../core/navbar/nav_bar.dart';
 
 class SignUp extends ConsumerStatefulWidget {
   const SignUp({super.key});
@@ -34,7 +34,7 @@ class _SignUpState extends ConsumerState<SignUp> {
         // ignore: use_build_context_synchronously
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => const HomePage(),
+            builder: (context) => AccountPage(),
           ),
         );
       }

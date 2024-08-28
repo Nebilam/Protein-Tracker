@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 class InputField extends StatelessWidget {
   final controller = TextEditingController();
   final String hint;
+  final String initialValue;
 
-  InputField({super.key, required this.hint});
+  InputField({super.key, required this.hint, this.initialValue = ''});
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+        initialValue: initialValue,
         controller: controller,
         decoration: InputDecoration(
           border: const OutlineInputBorder(
