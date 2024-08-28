@@ -67,11 +67,20 @@ class Home extends ConsumerWidget {
                           fontSize: 40,
                         )),
                     GestureDetector(
-                      child: Text(
-                          "${ref.watch(proteins).currentIntake.toInt()} of ${ref.watch(proteins).goalIntake.toInt()} grams",
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                          )),
+                      child: FutureBuilder(
+                          future: ref.watch(mealData).sumProteins(),
+                          builder: (context, snapshot) {
+                            if (!snapshot.hasData) {
+                              return const Center(
+                                  child: CircularProgressIndicator());
+                            }
+                            final currentIntake = snapshot.data!;
+                            return Text(
+                                "${currentIntake} of ${ref.watch(proteins).goalIntake.toInt()} grams",
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ));
+                          }),
                       onTap: () {
                         Navigator.push(
                             context,
