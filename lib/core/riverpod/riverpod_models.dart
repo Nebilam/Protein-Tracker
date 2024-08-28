@@ -43,6 +43,14 @@ class UserData extends ChangeNotifier {
       .from('profiles')
       .select('username')
       .eq('id', supabase.auth.currentUser!.id);
+  late final weight = supabase
+      .from('profiles')
+      .select('weight')
+      .eq('id', supabase.auth.currentUser!.id);
+  late final proteinRatio = supabase
+      .from('profiles')
+      .select('protein_ratio')
+      .eq('id', supabase.auth.currentUser!.id);
 
   UserData();
 }

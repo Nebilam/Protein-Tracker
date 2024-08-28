@@ -2,12 +2,49 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myapp/common/widgets/buttons/text_button.dart';
 import 'package:myapp/common/widgets/input_fields/input_field.dart';
+import 'package:myapp/core/riverpod/riverpod.dart';
 
 class Profile extends ConsumerWidget {
   const Profile({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    var weightInputField = FutureBuilder(
+        future: ref.watch(userData).weight,
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          final weight = snapshot.data![0]['weight'];
+          return InputField(
+            hint: weight.toString(),
+            label: "Weight",
+          );
+        });
+    var proteinratioInputField = FutureBuilder(
+        future: ref.watch(userData).proteinRatio,
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          final ratio = snapshot.data![0]['protein_ratio'];
+          return InputField(
+            hint: ratio.toString(),
+            label: "Protein Ratio",
+          );
+        });
+    var usernameInputField = FutureBuilder(
+        future: ref.watch(userData).userName,
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          final username = snapshot.data![0]['username'];
+          return InputField(
+            hint: username.toString(),
+            label: "Username",
+          );
+        });
     return Scaffold(
       appBar: AppBar(
         title: const Text("Profile Settings"),
@@ -38,15 +75,11 @@ class Profile extends ConsumerWidget {
                   child: Row(
                     children: [
                       Expanded(
-                        child: InputField(
-                          hint: "Weight",
-                        ),
+                        child: weightInputField,
                       ),
                       const SizedBox(width: 12),
                       Expanded(
-                        child: InputField(
-                          hint: "Protein ratio",
-                        ),
+                        child: proteinratioInputField,
                       ),
                     ],
                   ),
@@ -56,16 +89,22 @@ class Profile extends ConsumerWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: InputField(
-                    hint: "Username",
-                  ),
+                  child: usernameInputField,
                 ),
                 const SizedBox(
                   height: 20,
                 ),
                 ButtonText(
                   text: "Update",
-                  onPressed: () {},
+                  onPressed: () {
+                    ref
+                        .read(userData)
+                        .updateName(usernameInputField.controller.text);
+                    ref.read(userData).updateWeight(
+                        double.parse(weightInputField.controller.text));
+                    ref.read(userData).updateProteinRatio(
+                        double.parse(proteinratioInputField.controller.text));
+                  },
                 ),
                 ButtonText(
                   text: "Change password",
