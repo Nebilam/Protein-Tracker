@@ -97,13 +97,13 @@ class Profile extends ConsumerWidget {
                 ButtonText(
                   text: "Update",
                   onPressed: () {
-                    ref
-                        .read(userData)
-                        .updateName(usernameInputField.controller.text);
-                    ref.read(userData).updateWeight(
-                        double.parse(weightInputField.controller.text));
-                    ref.read(userData).updateProteinRatio(
-                        double.parse(proteinratioInputField.controller.text));
+                    // ref
+                    //     .read(userData)
+                    //     .updateName(usernameInputField.controller.text);
+                    // ref.read(userData).updateWeight(
+                    //     double.parse(weightInputField.controller.text));
+                    // ref.read(userData).updateProteinRatio(
+                    //     double.parse(proteinratioInputField.controller.text));
                   },
                 ),
                 ButtonText(
