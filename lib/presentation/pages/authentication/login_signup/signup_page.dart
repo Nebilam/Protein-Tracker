@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myapp/common/widgets/buttons/text_button.dart';
-import 'package:myapp/core/riverpod/riverpod.dart';
 import 'package:myapp/main.dart';
 import 'package:myapp/presentation/pages/authentication/login_signup/login_page.dart';
 import 'package:myapp/presentation/pages/authentication/login_signup/token_page.dart';
@@ -60,10 +59,6 @@ class _SignUpState extends ConsumerState<SignUp> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: userNameField,
-              ),
               const SizedBox(height: 12),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -79,10 +74,6 @@ class _SignUpState extends ConsumerState<SignUp> {
                 text: 'Sign Up',
                 onPressed: () async {
                   try {
-                    final username = userNameField.controller.text;
-                    ref
-                        .read(userData)
-                        .setNewUserTrue(userNameField.controller.text);
                     final email = emailField.controller.text.trim();
                     final password = passwordField.passwordController.text;
                     await supabase.auth.signUp(

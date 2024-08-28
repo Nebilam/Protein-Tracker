@@ -21,31 +21,18 @@ class Proteins extends ChangeNotifier {
 }
 
 class UserData extends ChangeNotifier {
-  bool newUser;
-  String newUserName;
-  final userId = supabase.auth.currentUser!.id;
-
-  void setNewUserTrue(String username) {
-    newUser = true;
-    newUserName = username;
-    notifyListeners();
-  }
-
-  void setNewUserFalse() {
-    newUser = false;
-    notifyListeners();
-  }
-
   void updateName(String newName) async {
     await supabase
         .from('profiles')
-        .update({'username': newName}).eq('id', userId);
+        .update({'username': newName}).eq('id', supabase.auth.currentUser!.id);
   }
 
-  late final userName =
-      supabase.from('profiles').select('username').eq('id', userId);
+  late final userName = supabase
+      .from('profiles')
+      .select('username')
+      .eq('id', supabase.auth.currentUser!.id);
 
-  UserData({this.newUser = false, this.newUserName = ''});
+  UserData();
 }
 
 class MealData extends ChangeNotifier {
