@@ -5,46 +5,13 @@ import 'package:myapp/common/widgets/input_fields/input_field.dart';
 import 'package:myapp/core/riverpod/riverpod.dart';
 
 class Profile extends ConsumerWidget {
-  const Profile({super.key});
+  final weightInputField = InputField(hint: "Weight");
+  final proteinratioInputField = InputField(hint: "Protein Ratio");
+  final usernameInputField = InputField(hint: "Username");
+  Profile({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var weightInputField = FutureBuilder(
-        future: ref.watch(userData).weight,
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          final weight = snapshot.data![0]['weight'];
-          return InputField(
-            hint: weight.toString(),
-            label: "Weight",
-          );
-        });
-    var proteinratioInputField = FutureBuilder(
-        future: ref.watch(userData).proteinRatio,
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          final ratio = snapshot.data![0]['protein_ratio'];
-          return InputField(
-            hint: ratio.toString(),
-            label: "Protein Ratio",
-          );
-        });
-    var usernameInputField = FutureBuilder(
-        future: ref.watch(userData).userName,
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          final username = snapshot.data![0]['username'];
-          return InputField(
-            hint: username.toString(),
-            label: "Username",
-          );
-        });
     return Scaffold(
       appBar: AppBar(
         title: const Text("Profile Settings"),
@@ -97,13 +64,22 @@ class Profile extends ConsumerWidget {
                 ButtonText(
                   text: "Update",
                   onPressed: () {
-                    // ref
-                    //     .read(userData)
-                    //     .updateName(usernameInputField.controller.text);
-                    // ref.read(userData).updateWeight(
-                    //     double.parse(weightInputField.controller.text));
-                    // ref.read(userData).updateProteinRatio(
-                    //     double.parse(proteinratioInputField.controller.text));
+                    if (usernameInputField.controller.text != '') {
+                      ref
+                          .read(userData)
+                          .updateName(usernameInputField.controller.text);
+                    }
+                    if (weightInputField.controller.text != '') {
+                      ref.read(userData).updateWeight(
+                          double.parse(weightInputField.controller.text));
+                    }
+                    if (proteinratioInputField.controller.text != '') {
+                      ref.read(userData).updateProteinRatio(
+                          double.parse(proteinratioInputField.controller.text));
+                    }
+                    // ignore: unused_result
+                    ref.refresh(userData);
+                    Navigator.of(context).pop();
                   },
                 ),
                 ButtonText(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myapp/common/widgets/future/future_widget.dart';
 import 'package:myapp/core/riverpod/riverpod.dart';
 import 'package:myapp/presentation/pages/home/single_choice_selection.dart';
 
@@ -17,13 +18,10 @@ class IntakeList extends ConsumerWidget {
             : intake == Meals.dinner
                 ? ref.watch(mealData).dinnerData
                 : ref.watch(mealData).snacksData;
-    return FutureBuilder(
+    return CustomFutureBuilder(
         future: intakeList,
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          final meal = snapshot.data!;
+        builder: (context, data) {
+          final meal = data;
           return ListView.builder(
             itemCount: meal.length,
             itemBuilder: (context, index) {

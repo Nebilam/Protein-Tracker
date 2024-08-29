@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myapp/common/widgets/future/future_widget.dart';
 import 'package:myapp/core/riverpod/riverpod.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
@@ -26,7 +27,7 @@ class Home extends ConsumerWidget {
               ),
               onTap: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const Profile()));
+                    MaterialPageRoute(builder: (context) => Profile()));
               },
             ),
             const SizedBox(width: 15),
@@ -34,15 +35,13 @@ class Home extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text("Welcome Back", style: TextStyle(fontSize: 12)),
-                FutureBuilder(
-                    future: ref.watch(userData).userName,
-                    builder: (context, snapshot) {
-                      if (!snapshot.hasData) {
-                        return const Center(child: CircularProgressIndicator());
-                      }
-                      final name = snapshot.data!;
-                      return Text(name[0]['username'].toString());
-                    }),
+                CustomFutureBuilder(
+                  future: ref.watch(userData).userName,
+                  builder: (context, data) {
+                    final name = data;
+                    return Text(name[0]['username'].toString());
+                  },
+                ),
               ],
             ),
           ],
@@ -67,25 +66,24 @@ class Home extends ConsumerWidget {
                           fontSize: 40,
                         )),
                     GestureDetector(
-                      child: FutureBuilder(
+                      child: CustomFutureBuilder(
                           future: ref.watch(mealData).sumProteins(),
-                          builder: (context, snapshot) {
-                            if (!snapshot.hasData) {
-                              return const Center(
-                                  child: CircularProgressIndicator());
-                            }
-                            final currentIntake = snapshot.data!;
-                            return Text(
-                                "${currentIntake} of ${ref.watch(proteins).goalIntake.toInt()} grams",
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                ));
+                          builder: (context, data) {
+                            final currentIntake = data;
+                            return CustomFutureBuilder(
+                                future: ref.watch(mealData).sumProteins(),
+                                builder: (context, data) {
+                                  final goalIntake = data;
+                                  return Text(
+                                      "$currentIntake of $goalIntake grams",
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ));
+                                });
                           }),
                       onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const Profile()));
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => Profile()));
                       },
                     ),
                   ],
