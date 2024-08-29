@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:myapp/presentation/pages/home/single_choice_selection.dart';
+import 'package:myapp/common/widgets/selection/single_choice_selection.dart';
 
 class Tracker extends StatelessWidget {
   const Tracker({super.key});

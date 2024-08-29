@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myapp/common/widgets/future/future_widget.dart';
 import 'package:myapp/core/riverpod/riverpod.dart';
 import 'package:percent_indicator/percent_indicator.dart';
-import 'package:myapp/presentation/pages/home/single_choice_selection.dart';
+import 'package:myapp/common/widgets/selection/single_choice_selection.dart';
 import 'package:myapp/presentation/popups/profile/profile.dart';
 
 class Home extends ConsumerWidget {

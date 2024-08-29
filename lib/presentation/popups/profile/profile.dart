@@ -100,6 +100,8 @@ class Profile extends ConsumerWidget {
                               // ignore: unused_result
                               ref.refresh(userData);
                               Navigator.of(context).pop();
+                              // ignore: unused_result
+                              ref.refresh(userData);
                             },
                           );
                         });
