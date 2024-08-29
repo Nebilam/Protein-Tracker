@@ -3,8 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myapp/common/widgets/buttons/text_button.dart';
 import 'package:myapp/main.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-
-import '../../../../common/widgets/input_fields/input_field.dart';
+import 'package:myapp/common/widgets/input_fields/input_field.dart';
 
 class TokenPage extends ConsumerWidget {
   final tokenField = InputField(hint: 'Token');

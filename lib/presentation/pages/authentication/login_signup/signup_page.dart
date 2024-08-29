@@ -8,9 +8,8 @@ import 'package:myapp/presentation/pages/authentication/account/acount_page.dart
 import 'package:myapp/presentation/pages/authentication/login_signup/login_page.dart';
 import 'package:myapp/presentation/pages/authentication/login_signup/token_page.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-
-import '../../../../common/widgets/input_fields/input_field.dart';
-import '../../../../common/widgets/input_fields/password_field.dart';
+import 'package:myapp/common/widgets/input_fields/input_field.dart';
+import 'package:myapp/common/widgets/input_fields/password_field.dart';
 
 class SignUp extends ConsumerStatefulWidget {
   const SignUp({super.key});
