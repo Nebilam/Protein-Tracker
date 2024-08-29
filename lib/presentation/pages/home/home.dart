@@ -97,7 +97,8 @@ class Home extends ConsumerWidget {
           const SizedBox(
             height: 30,
           ),
-          const Expanded(child: SingleChoice())
+          const Expanded(
+              child: SingleChoice(container: SelectionChoice.intakeList))
         ]),
       ),
     );
