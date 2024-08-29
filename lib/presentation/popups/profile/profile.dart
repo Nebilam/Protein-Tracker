@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myapp/common/widgets/buttons/sign_out.dart';
 import 'package:myapp/common/widgets/buttons/text_button.dart';
+import 'package:myapp/common/widgets/future/future_widget.dart';
 import 'package:myapp/common/widgets/input_fields/input_field.dart';
 import 'package:myapp/core/riverpod/riverpod.dart';
 
@@ -62,25 +63,43 @@ class Profile extends ConsumerWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                ButtonText(
-                  text: "Update",
-                  onPressed: () {
-                    if (usernameInputField.controller.text != '') {
-                      ref
-                          .read(userData)
-                          .updateName(usernameInputField.controller.text);
-                    }
-                    if (weightInputField.controller.text != '') {
-                      ref.read(userData).updateWeight(
-                          double.parse(weightInputField.controller.text));
-                    }
-                    if (proteinratioInputField.controller.text != '') {
-                      ref.read(userData).updateProteinRatio(
-                          double.parse(proteinratioInputField.controller.text));
-                    }
-                    // ignore: unused_result
-                    ref.refresh(userData);
-                    Navigator.of(context).pop();
+                CustomFutureBuilder(
+                  future: ref.read(userData).proteinRatio,
+                  builder: (context, data) {
+                    double proteinRatio = data[0]['protein_ratio'].toDouble();
+                    return CustomFutureBuilder(
+                        future: ref.read(userData).weight,
+                        builder: (context, data) {
+                          double weight = data[0]['weight'].toDouble();
+                          return ButtonText(
+                            text: "Update",
+                            onPressed: () {
+                              if (usernameInputField.controller.text != '') {
+                                ref.read(userData).updateName(
+                                    usernameInputField.controller.text);
+                              }
+                              if (weightInputField.controller.text != '') {
+                                ref.read(userData).updateWeight(double.parse(
+                                    weightInputField.controller.text));
+                                weight = double.parse(
+                                    weightInputField.controller.text);
+                              }
+                              if (proteinratioInputField.controller.text !=
+                                  '') {
+                                ref.read(userData).updateProteinRatio(
+                                    double.parse(proteinratioInputField
+                                        .controller.text));
+                                proteinRatio = double.parse(
+                                    proteinratioInputField.controller.text);
+                              }
+                              ref.read(userData).updateGoalIntake(
+                                  (proteinRatio * weight).round());
+                              Navigator.of(context).pop();
+                              // ignore: unused_result
+                              ref.refresh(userData);
+                            },
+                          );
+                        });
                   },
                 ),
                 ButtonText(

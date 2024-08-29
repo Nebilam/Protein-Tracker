@@ -20,6 +20,11 @@ class UserData extends ChangeNotifier {
         'id', supabase.auth.currentUser!.id);
   }
 
+  void updateGoalIntake(int newGoalIntake) async {
+    await supabase.from('profiles').update({'goal_intake': newGoalIntake}).eq(
+        'id', supabase.auth.currentUser!.id);
+  }
+
   late final userName = supabase
       .from('profiles')
       .select('username')
