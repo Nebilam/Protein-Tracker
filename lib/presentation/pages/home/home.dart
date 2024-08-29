@@ -51,46 +51,50 @@ class Home extends ConsumerWidget {
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
         child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
           Center(
-            child: CircularPercentIndicator(
-                radius: 150.0,
-                lineWidth: 10.0,
-                animation: true,
-                percent: ref.watch(proteins).percentageIntake.toDouble(),
-                center: Column(
-                  children: [
-                    const SizedBox(height: 110),
-                    Text(
-                        "${ref.watch(proteins).roundPercentageIntake.toInt()}%",
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 40,
-                        )),
-                    GestureDetector(
-                      child: CustomFutureBuilder(
-                          future: ref.watch(mealData).sumProteins(),
-                          builder: (context, data) {
-                            final currentIntake = data;
-                            return CustomFutureBuilder(
-                                future: ref.watch(mealData).sumProteins(),
-                                builder: (context, data) {
-                                  final goalIntake = data;
-                                  return Text(
-                                      "$currentIntake of $goalIntake grams",
+              child: CustomFutureBuilder(
+                  future: ref.watch(mealData).sumProteins(),
+                  builder: (context, data) {
+                    final currentIntake = data;
+                    return CustomFutureBuilder(
+                        future: ref.watch(userData).goalIntake,
+                        builder: (context, data) {
+                          final goalIntake = data[0]['goal_intake'];
+                          return CircularPercentIndicator(
+                              radius: 150.0,
+                              lineWidth: 10.0,
+                              animation: true,
+                              percent: currentIntake / goalIntake > 1
+                                  ? 1
+                                  : currentIntake / goalIntake,
+                              center: Column(
+                                children: [
+                                  const SizedBox(height: 110),
+                                  Text(
+                                      "${int.parse(((currentIntake / goalIntake) * 100).toStringAsFixed(0))}%",
                                       style: const TextStyle(
                                         fontWeight: FontWeight.bold,
-                                      ));
-                                });
-                          }),
-                      onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => Profile()));
-                      },
-                    ),
-                  ],
-                ),
-                circularStrokeCap: CircularStrokeCap.round,
-                progressColor: Theme.of(context).colorScheme.primary),
-          ),
+                                        fontSize: 40,
+                                      )),
+                                  GestureDetector(
+                                    child: Text(
+                                        "$currentIntake of $goalIntake grams",
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                        )),
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => Profile()));
+                                    },
+                                  ),
+                                ],
+                              ),
+                              circularStrokeCap: CircularStrokeCap.round,
+                              progressColor:
+                                  Theme.of(context).colorScheme.inversePrimary);
+                        });
+                  })),
           const SizedBox(
             height: 30,
           ),

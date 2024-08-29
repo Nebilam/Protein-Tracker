@@ -51,6 +51,10 @@ class UserData extends ChangeNotifier {
       .from('profiles')
       .select('protein_ratio')
       .eq('id', supabase.auth.currentUser!.id);
+  late final goalIntake = supabase
+      .from('profiles')
+      .select('goal_intake')
+      .eq('id', supabase.auth.currentUser!.id);
 
   UserData();
 }

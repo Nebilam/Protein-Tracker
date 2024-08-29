@@ -4,7 +4,8 @@ import 'package:myapp/presentation/pages/authentication/login_signup/login_page.
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SignOutWidget extends StatefulWidget {
-  const SignOutWidget({super.key});
+  final Style style;
+  const SignOutWidget({super.key, this.style = Style.primary});
 
   @override
   SignOutWidgetState createState() => SignOutWidgetState();
@@ -39,6 +40,7 @@ class SignOutWidgetState extends State<SignOutWidget> {
   Widget build(BuildContext context) {
     return ButtonText(
       text: "Sign out",
+      style: widget.style,
       onPressed: () {
         _signOut();
       },

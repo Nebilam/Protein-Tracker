@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myapp/common/widgets/buttons/sign_out.dart';
 import 'package:myapp/common/widgets/buttons/text_button.dart';
 import 'package:myapp/common/widgets/input_fields/input_field.dart';
 import 'package:myapp/core/riverpod/riverpod.dart';
@@ -86,11 +87,9 @@ class Profile extends ConsumerWidget {
                   text: "Change password",
                   onPressed: () {},
                 ),
-                ButtonText(
-                  text: "Sign out",
-                  onPressed: () {},
+                const SignOutWidget(
                   style: Style.secondary,
-                ),
+                )
               ],
             ),
           ),
