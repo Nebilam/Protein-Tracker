@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myapp/common/widgets/buttons/sign_out.dart';
@@ -94,9 +96,10 @@ class Profile extends ConsumerWidget {
                               }
                               ref.read(userData).updateGoalIntake(
                                   (proteinRatio * weight).round());
-                              Navigator.of(context).pop();
+                              sleep(const Duration(milliseconds: 250));
                               // ignore: unused_result
                               ref.refresh(userData);
+                              Navigator.of(context).pop();
                             },
                           );
                         });
