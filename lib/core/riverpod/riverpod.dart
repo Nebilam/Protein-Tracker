@@ -10,3 +10,7 @@ final userData = ChangeNotifierProvider<UserData>((ref) {
 final mealData = ChangeNotifierProvider<MealData>((ref) {
   return MealData();
 });
+
+final mealDataOptions = ChangeNotifierProvider<MealDataOptions>((ref) {
+  return MealDataOptions();
+});

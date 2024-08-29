@@ -8,10 +8,16 @@ class Tracker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 20),
-      child: SingleChoice(
-        container: SelectionChoice.favourites,
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Tracker',
+            style: TextStyle(fontWeight: FontWeight.bold)),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 10),
+        child: SingleChoice(
+          container: SelectionChoice.favourites,
+        ),
       ),
     );
   }

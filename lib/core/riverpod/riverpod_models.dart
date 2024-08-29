@@ -85,3 +85,17 @@ class MealData extends ChangeNotifier {
 
   MealData();
 }
+
+class MealDataOptions extends ChangeNotifier {
+  final userId = supabase.auth.currentUser!.id;
+
+  late final breakfastData =
+      supabase.from('breakfast_list').select('*').eq('user_id', userId);
+  late final lunchData =
+      supabase.from('lunch_list').select('*').eq('user_id', userId);
+  late final dinnerData =
+      supabase.from('dinner_list').select('*').eq('user_id', userId);
+  late final snacksData =
+      supabase.from('snacks_list').select('*').eq('user_id', userId);
+  MealDataOptions();
+}

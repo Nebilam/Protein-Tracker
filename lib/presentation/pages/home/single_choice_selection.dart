@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/core/extensions/string_extension.dart';
-import 'package:myapp/presentation/pages/home/favourites_list.dart';
 import 'package:myapp/presentation/pages/home/intake_list.dart';
+import 'package:myapp/presentation/pages/tracker/favourites_list.dart';
 
 enum SelectionChoice { intakeList, favourites }
 
@@ -61,7 +61,7 @@ class _SingleChoiceState extends State<SingleChoice> {
               ? IntakeList(
                   intake: meal,
                 )
-              : const FavouritesList(),
+              : FavouritesList(meal: meal),
         ),
       ],
     );
