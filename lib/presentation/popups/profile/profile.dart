@@ -7,6 +7,7 @@ import 'package:myapp/common/widgets/buttons/text_button.dart';
 import 'package:myapp/common/widgets/future/future_widget.dart';
 import 'package:myapp/common/widgets/input_fields/input_field.dart';
 import 'package:myapp/core/riverpod/riverpod.dart';
+import 'package:myapp/presentation/popups/acount_management/change_password.dart';
 
 class Profile extends ConsumerWidget {
   final weightInputField = InputField(hint: "Weight");
@@ -109,7 +110,12 @@ class Profile extends ConsumerWidget {
                 ),
                 ButtonText(
                   text: "Change password",
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ChangePassword()));
+                  },
                 ),
                 const SignOutWidget(
                   style: Style.secondary,
