@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myapp/common/functions/execute_with_error_handling.dart';
 import 'package:myapp/common/widgets/buttons/text_button.dart';
 import 'package:myapp/main.dart';
 import 'package:myapp/presentation/pages/authentication/account/acount_page.dart';
@@ -71,46 +72,32 @@ class _SignUpState extends ConsumerState<SignUp> {
               const SizedBox(height: 12),
               ButtonText(
                 text: 'Sign Up',
-                onPressed: () async {
-                  try {
-                    final email = emailField.controller.text.trim();
-                    final password = passwordField.passwordController.text;
-                    await supabase.auth.signUp(
-                      email: email,
-                      password: password,
-                    );
-                    if (mounted) {
-                      // ignore: use_build_context_synchronously
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Check your inbox'),
-                        ),
-                      );
-                      Navigator.push(
+                onPressed: () {
+                  executeWithErrorHandling(
+                      type: FunctionType.async,
+                      context: context,
+                      action: () async {
+                        final email = emailField.controller.text.trim();
+                        final password = passwordField.passwordController.text;
+                        await supabase.auth.signUp(
+                          email: email,
+                          password: password,
+                        );
+                        if (mounted) {
                           // ignore: use_build_context_synchronously
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => TokenPage(email: email)));
-                    }
-                  } on AuthException catch (error) {
-                    // ignore: use_build_context_synchronously
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(error.message),
-                        // ignore: use_build_context_synchronously
-                        backgroundColor: Theme.of(context).colorScheme.error,
-                      ),
-                    );
-                  } catch (error) {
-                    // ignore: use_build_context_synchronously
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(error.toString()),
-                        // ignore: use_build_context_synchronously
-                        backgroundColor: Theme.of(context).colorScheme.error,
-                      ),
-                    );
-                  }
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Check your inbox'),
+                            ),
+                          );
+                          Navigator.push(
+                              // ignore: use_build_context_synchronously
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      TokenPage(email: email)));
+                        }
+                      });
                 },
               ),
               ButtonText(

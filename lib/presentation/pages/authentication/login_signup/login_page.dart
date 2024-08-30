@@ -1,9 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:myapp/common/functions/execute_with_error_handling.dart';
 import 'package:myapp/common/widgets/input_fields/password_field.dart';
 import 'package:myapp/core/navbar/nav_bar.dart';
 import 'package:myapp/main.dart';
+import 'package:myapp/presentation/pages/authentication/login_signup/password_reset/password_reset.dart';
 import 'package:myapp/presentation/pages/authentication/login_signup/signup_page.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:myapp/common/widgets/buttons/text_button.dart';
@@ -63,31 +65,15 @@ class _LoginPageState extends State<LoginPage> {
             const SizedBox(height: 12),
             ButtonText(
               text: "Sign In",
-              onPressed: () async {
-                try {
-                  await supabase.auth.signInWithPassword(
-                    email: emailField.controller.text.trim(),
-                    password: passwordField.passwordController.text,
-                  );
-                } on AuthException catch (error) {
-                  // ignore: use_build_context_synchronously
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(error.message),
-                      // ignore: use_build_context_synchronously
-                      backgroundColor: Theme.of(context).colorScheme.error,
-                    ),
-                  );
-                } catch (error) {
-                  // ignore: use_build_context_synchronously
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: const Text('Error occured, please retry.'),
-                      // ignore: use_build_context_synchronously
-                      backgroundColor: Theme.of(context).colorScheme.error,
-                    ),
-                  );
-                }
+              onPressed: () {
+                executeWithErrorHandling(
+                    type: FunctionType.async,
+                    context: context,
+                    action: () async {
+                      await supabase.auth.signInWithPassword(
+                          email: emailField.controller.text.trim(),
+                          password: passwordField.passwordController.text);
+                    });
               },
             ),
             ButtonText(
@@ -98,6 +84,23 @@ class _LoginPageState extends State<LoginPage> {
                     MaterialPageRoute(builder: (context) => const SignUp()));
               },
             ),
+            const SizedBox(
+              height: 12,
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => ResetPassword()));
+              },
+              child: RichText(
+                  text: const TextSpan(text: "Forgot Password? ", children: [
+                TextSpan(
+                    text: "Reset Password",
+                    style: TextStyle(
+                      color: Colors.blue,
+                    ))
+              ])),
+            )
           ],
         ),
       ),
