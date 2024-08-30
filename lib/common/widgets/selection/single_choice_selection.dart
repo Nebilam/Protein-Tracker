@@ -56,6 +56,7 @@ class _SingleChoiceState extends State<SingleChoice> {
           meal.name.capitalize(),
           style: const TextStyle(fontWeight: FontWeight.bold),
         ),
+        const SizedBox(height: 10),
         Expanded(
           child: widget.container == SelectionChoice.intakeList
               ? IntakeList(

@@ -92,6 +92,10 @@ class IntakeList extends ConsumerWidget {
                     },
                   );
                 },
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                tileColor: Theme.of(context).colorScheme.secondaryContainer,
               );
             },
           );

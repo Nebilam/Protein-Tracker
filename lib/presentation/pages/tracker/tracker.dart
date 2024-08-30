@@ -10,6 +10,7 @@ class Tracker extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: const Text('Tracker',
             style: TextStyle(fontWeight: FontWeight.bold)),
       ),
