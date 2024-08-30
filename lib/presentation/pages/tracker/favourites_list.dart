@@ -43,8 +43,6 @@ class FavouritesList extends ConsumerWidget {
               list2.add(meal[i]);
             }
           }
-          print("List1: $list1");
-          print("List2: $list2");
           return Row(
             children: [
               Expanded(
