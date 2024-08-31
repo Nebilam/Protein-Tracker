@@ -108,6 +108,16 @@ class MealDataOptions extends ChangeNotifier {
     await supabase.from(mealType).delete().eq('id', id);
   }
 
+  void addNew(
+      String mealType, String name, num weight, num proteinDensity) async {
+    await supabase.from('${mealType}_list').insert({
+      'user_id': supabase.auth.currentUser!.id,
+      'name': name,
+      'weight': weight,
+      'protein_density': proteinDensity,
+    });
+  }
+
   late final breakfastData =
       supabase.from('breakfast_list').select('*').eq('user_id', userId);
   late final lunchData =

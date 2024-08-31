@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myapp/common/widgets/future/future_widget.dart';
+import 'package:myapp/presentation/pages/tracker/widgets/dialog.dart';
 import 'package:myapp/presentation/pages/tracker/widgets/favourites_listview_builder.dart';
 import 'package:myapp/core/riverpod/riverpod.dart';
 import 'package:myapp/common/widgets/selection/single_choice_selection.dart';
@@ -44,33 +45,56 @@ class FavouritesList extends ConsumerWidget {
               list2.add(meal[i]);
             }
           }
-          return SingleChildScrollView(
-              physics: const ScrollPhysics(),
-              child: Column(
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: Card(
-                          child: FavouritesListviewBuilder(
-                            list: list1,
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+            child: Stack(
+              children: [
+                SingleChildScrollView(
+                    physics: const ScrollPhysics(),
+                    child: Column(
+                      children: [
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              child: Card(
+                                child: FavouritesListviewBuilder(
+                                  list: list1,
+                                  mealType: mealType,
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: Card(
+                                child: FavouritesListviewBuilder(
+                                  list: list2,
+                                  mealType: mealType,
+                                ),
+                              ),
+                            )
+                          ],
+                        )
+                      ],
+                    )),
+                Positioned(
+                  bottom: 0,
+                  right: 0,
+                  child: FloatingActionButton(
+                      tooltip: "Add new favourite",
+                      onPressed: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return FavouriteDialog(
+                            title: "Add new favourite",
                             mealType: mealType,
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: Card(
-                          child: FavouritesListviewBuilder(
-                            list: list2,
-                            mealType: mealType,
-                          ),
-                        ),
-                      )
-                    ],
-                  )
-                ],
-              ));
+                          );
+                        }));
+                      },
+                      child: const Icon(Icons.add)),
+                ),
+              ],
+            ),
+          );
         });
   }
 }

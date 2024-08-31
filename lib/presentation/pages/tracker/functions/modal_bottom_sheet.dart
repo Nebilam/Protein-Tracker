@@ -1,6 +1,8 @@
+// TODO: turn this into a class
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myapp/core/riverpod/riverpod.dart';
+import 'package:myapp/presentation/pages/tracker/widgets/dialog.dart';
 
 late final String id;
 late final String name;
@@ -25,7 +27,13 @@ void customModelBottomSheet({
         },
         icon: const Icon(Icons.copy)),
     IconButton(onPressed: () {}, icon: const Icon(Icons.add)),
-    IconButton(onPressed: () {}, icon: const Icon(Icons.edit_outlined)),
+    IconButton(
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return FavouriteDialog(title: 'Edit', mealType: mealType);
+          }));
+        },
+        icon: const Icon(Icons.edit_outlined)),
     IconButton(
         onPressed: () {
           ref.read(mealDataOptions).delete('${mealType}_list', id);
