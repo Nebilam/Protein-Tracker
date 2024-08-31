@@ -48,7 +48,7 @@ class UserData extends ChangeNotifier {
 class MealData extends ChangeNotifier {
   final userId = supabase.auth.currentUser!.id;
 
-  Future<int> sumProteins() async {
+  Future<double> sumProteins() async {
     final sum = await Future.wait([
       _sumFromTable('breakfast', userId),
       _sumFromTable('lunch', userId),
@@ -56,17 +56,17 @@ class MealData extends ChangeNotifier {
       _sumFromTable('snacks', userId),
     ]).then((values) => values.reduce((a, b) => a + b));
 
-    return sum;
+    return sum.toDouble();
   }
 
-  Future<int> _sumFromTable(String tableName, String userId) async {
+  Future<double> _sumFromTable(String tableName, String userId) async {
     final supabase = Supabase.instance.client;
     final query =
         supabase.from(tableName).select('proteins').eq('user_id', userId);
 
     try {
       final result = await query;
-      List items = [for (var i in result) i['proteins']];
+      List items = [for (var i in result) i['proteins'].toDouble()];
       return items.reduce((a, b) => a + b);
     } catch (error) {
       return 0;
