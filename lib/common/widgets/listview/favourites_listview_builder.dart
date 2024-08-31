@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myapp/common/functions/modal_bottom_sheet.dart';
 import 'package:myapp/core/riverpod/riverpod.dart';
 import 'package:myapp/main.dart';
 
 class FavouritesListviewBuilder extends ConsumerWidget {
   final List list;
   final mealType;
-  const FavouritesListviewBuilder(
-      {super.key, required this.list, required this.mealType});
+  final List<Widget> buttonList;
+  const FavouritesListviewBuilder({
+    super.key,
+    required this.list,
+    required this.mealType,
+    required this.buttonList,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -51,6 +57,8 @@ class FavouritesListviewBuilder extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: subtitles1,
             ),
+            onTap: () => customModelBottomSheet(
+                context: context, buttonList: buttonList),
             onLongPress: () async {
               showDialog(
                 context: context,
