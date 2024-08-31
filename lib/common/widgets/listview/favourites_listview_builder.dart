@@ -12,6 +12,8 @@ class FavouritesListviewBuilder extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return ListView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
       itemCount: list.length,
       itemBuilder: (context, index) {
         final item = list[index];
@@ -25,57 +27,68 @@ class FavouritesListviewBuilder extends ConsumerWidget {
                 (item[proteinDensityKey] * item[weightKey]).toStringAsFixed(2));
             if (item.containsKey(weightKey)) {
               subtitles1.add(
-                Text(
-                  """P: ${proteins}g
-W: ${item[weightKey]}g""",
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "${proteins}g",
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      "1 x ${item[weightKey]}g",
+                    )
+                  ],
                 ),
               );
             }
           }
         });
-        return ListTile(
-          title: Text(item['name']),
-          subtitle: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: subtitles1,
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 5),
+          child: ListTile(
+            title: Text(item['name']),
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: subtitles1,
+            ),
+            onLongPress: () async {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: const Text('Confirm Delete'),
+                    content: const Text(
+                        'Are you sure you want to delete this item?'),
+                    actions: [
+                      TextButton(
+                        child: const Text('Cancel'),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                      TextButton(
+                        child: const Text('Delete'),
+                        onPressed: () async {
+                          await supabase
+                              .from(mealType)
+                              .delete()
+                              .eq('id', item['id']);
+                          // ignore: use_build_context_synchronously
+                          Navigator.of(context).pop();
+                          // ignore: unused_result
+                          ref.refresh(mealData);
+                        },
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            tileColor: Theme.of(context).colorScheme.secondaryContainer,
           ),
-          onLongPress: () async {
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  title: const Text('Confirm Delete'),
-                  content:
-                      const Text('Are you sure you want to delete this item?'),
-                  actions: [
-                    TextButton(
-                      child: const Text('Cancel'),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                    ),
-                    TextButton(
-                      child: const Text('Delete'),
-                      onPressed: () async {
-                        await supabase
-                            .from(mealType)
-                            .delete()
-                            .eq('id', item['id']);
-                        // ignore: use_build_context_synchronously
-                        Navigator.of(context).pop();
-                        // ignore: unused_result
-                        ref.refresh(mealData);
-                      },
-                    ),
-                  ],
-                );
-              },
-            );
-          },
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
-          tileColor: Theme.of(context).colorScheme.secondaryContainer,
         );
       },
     );

@@ -45,8 +45,21 @@ class IntakeList extends ConsumerWidget {
                   final proteinsKey = 'proteins${key.substring(8)}';
                   if (item.containsKey(weightKey)) {
                     subtitles.add(
-                      Text(
-                        '${item[proteinsKey]}g  •  $value x ${item[weightKey]}g',
+                      RichText(
+                        text: TextSpan(
+                            text: '${item[proteinsKey]}g  •  ',
+                            style: const TextStyle(
+                              fontFamily: 'Nunito',
+                              fontWeight: FontWeight.bold,
+                            ),
+                            children: [
+                              TextSpan(
+                                  text: '$value x ${item[weightKey]}g',
+                                  style: const TextStyle(
+                                    fontFamily: 'Nunito',
+                                    fontWeight: FontWeight.normal,
+                                  )),
+                            ]),
                       ),
                     );
                   }

@@ -43,26 +43,33 @@ class FavouritesList extends ConsumerWidget {
               list2.add(meal[i]);
             }
           }
-          return Row(
-            children: [
-              Expanded(
-                child: Card(
-                  child: FavouritesListviewBuilder(
-                    list: list1,
-                    mealType: mealType,
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Card(
-                  child: FavouritesListviewBuilder(
-                    list: list2,
-                    mealType: mealType,
-                  ),
-                ),
-              )
-            ],
-          );
+          return SingleChildScrollView(
+              physics: const ScrollPhysics(),
+              child: Column(
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: Card(
+                          child: FavouritesListviewBuilder(
+                            list: list1,
+                            mealType: mealType,
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Card(
+                          child: FavouritesListviewBuilder(
+                            list: list2,
+                            mealType: mealType,
+                          ),
+                        ),
+                      )
+                    ],
+                  )
+                ],
+              ));
         });
   }
 }
