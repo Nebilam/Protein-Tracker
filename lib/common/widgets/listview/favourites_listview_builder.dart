@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myapp/common/functions/modal_bottom_sheet.dart';
+import 'package:myapp/presentation/pages/tracker/functions/modal_bottom_sheet.dart';
 import 'package:myapp/core/riverpod/riverpod.dart';
 import 'package:myapp/main.dart';
 
 class FavouritesListviewBuilder extends ConsumerWidget {
   final List list;
-  final mealType;
-  final List<Widget> buttonList;
+  final String mealType;
   const FavouritesListviewBuilder({
     super.key,
     required this.list,
     required this.mealType,
-    required this.buttonList,
   });
 
   @override
@@ -58,7 +56,14 @@ class FavouritesListviewBuilder extends ConsumerWidget {
               children: subtitles1,
             ),
             onTap: () => customModelBottomSheet(
-                context: context, buttonList: buttonList),
+              ref: ref,
+              context: context,
+              id: item['id'],
+              name: item['name'],
+              mealType: mealType,
+              weight: item['weight'],
+              proteinDensity: item['protein_density'],
+            ),
             onLongPress: () async {
               showDialog(
                 context: context,

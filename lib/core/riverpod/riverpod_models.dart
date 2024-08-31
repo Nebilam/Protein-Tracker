@@ -69,9 +69,20 @@ class MealData extends ChangeNotifier {
       List items = [for (var i in result) i['proteins']];
       return items.reduce((a, b) => a + b);
     } catch (error) {
-      print('Error summing proteins from $tableName: ${error.toString()}');
       return 0;
     }
+  }
+
+  void cloneAdd(
+      String mealType, String name, num proteinDensity, num weight) async {
+    await supabase.from(mealType).insert({
+      'user_id': supabase.auth.currentUser!.id,
+      'name': name,
+      'proteinDensity': proteinDensity,
+      'quantity': 1,
+      'weight': weight,
+      'proteins': proteinDensity * weight,
+    });
   }
 
   late final breakfastData =
