@@ -1,3 +1,4 @@
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:myapp/common/widgets/buttons/text_button.dart';
 import 'package:myapp/presentation/pages/authentication/login_signup/login_page.dart';
@@ -15,17 +16,15 @@ class SignOutWidgetState extends State<SignOutWidget> {
   Future<void> _signOut() async {
     try {
       await Supabase.instance.client.auth.signOut();
-    } on AuthException catch (error) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text(error.message),
-            backgroundColor: Theme.of(context).colorScheme.error));
-      }
     } catch (error) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: const Text("Unexpected error occurred"),
-            backgroundColor: Theme.of(context).colorScheme.error));
+        AnimatedSnackBar.material(
+          error.toString(),
+          type: AnimatedSnackBarType.error,
+          snackBarStrategy: RemoveSnackBarStrategy(),
+          duration: const Duration(seconds: 3),
+          // ignore: use_build_context_synchronously
+        ).show(context);
       }
     } finally {
       if (mounted) {

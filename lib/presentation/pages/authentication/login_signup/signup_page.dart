@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myapp/common/functions/execute_with_error_handling.dart';
@@ -84,12 +85,13 @@ class _SignUpState extends ConsumerState<SignUp> {
                           password: password,
                         );
                         if (mounted) {
-                          // ignore: use_build_context_synchronously
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Check your inbox'),
-                            ),
-                          );
+                          AnimatedSnackBar.material(
+                            "Check your inbox",
+                            type: AnimatedSnackBarType.info,
+                            snackBarStrategy: RemoveSnackBarStrategy(),
+                            duration: const Duration(seconds: 3),
+                            // ignore: use_build_context_synchronously
+                          ).show(context);
                           Navigator.push(
                               // ignore: use_build_context_synchronously
                               context,
