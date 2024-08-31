@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myapp/common/widgets/future/future_widget.dart';
-import 'package:myapp/common/widgets/listview/favourites_listview_builder.dart';
+import 'package:myapp/presentation/pages/tracker/widgets/favourites_listview_builder.dart';
 import 'package:myapp/core/riverpod/riverpod.dart';
 import 'package:myapp/common/widgets/selection/single_choice_selection.dart';
 

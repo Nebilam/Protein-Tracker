@@ -55,15 +55,17 @@ class FavouritesListviewBuilder extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: subtitles1,
             ),
-            onTap: () => customModelBottomSheet(
-              ref: ref,
-              context: context,
-              id: item['id'],
-              name: item['name'],
-              mealType: mealType,
-              weight: item['weight'],
-              proteinDensity: item['protein_density'],
-            ),
+            onTap: () {
+              customModelBottomSheet(
+                ref: ref,
+                context: context,
+                id: item['id'],
+                name: item['name'],
+                mealType: mealType,
+                weight: item['weight'],
+                proteinDensity: item['protein_density'],
+              );
+            },
             onLongPress: () async {
               showDialog(
                 context: context,
@@ -83,13 +85,12 @@ class FavouritesListviewBuilder extends ConsumerWidget {
                         child: const Text('Delete'),
                         onPressed: () async {
                           await supabase
-                              .from(mealType)
+                              .from('${mealType}_list')
                               .delete()
                               .eq('id', item['id']);
                           // ignore: use_build_context_synchronously
                           Navigator.of(context).pop();
-                          // ignore: unused_result
-                          ref.refresh(mealData);
+                          ref.invalidate(mealDataOptions);
                         },
                       ),
                     ],

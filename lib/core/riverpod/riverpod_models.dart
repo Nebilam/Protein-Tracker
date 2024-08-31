@@ -73,6 +73,10 @@ class MealData extends ChangeNotifier {
     }
   }
 
+  void delete(String mealType, String id) async {
+    await supabase.from(mealType).delete().eq('id', id);
+  }
+
   void cloneAdd(
       String mealType, String name, num proteinDensity, num weight) async {
     await supabase.from(mealType).insert({
@@ -99,6 +103,10 @@ class MealData extends ChangeNotifier {
 
 class MealDataOptions extends ChangeNotifier {
   final userId = supabase.auth.currentUser!.id;
+
+  void delete(String mealType, String id) async {
+    await supabase.from(mealType).delete().eq('id', id);
+  }
 
   late final breakfastData =
       supabase.from('breakfast_list').select('*').eq('user_id', userId);

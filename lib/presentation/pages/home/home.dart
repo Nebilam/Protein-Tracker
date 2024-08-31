@@ -11,10 +11,8 @@ class Home extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // ignore: unused_result
-    ref.refresh(mealData);
-    // ignore: unused_result
-    ref.refresh(userData);
+    ref.invalidate(mealData);
+    ref.invalidate(userData);
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,

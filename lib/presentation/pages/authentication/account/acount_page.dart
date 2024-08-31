@@ -69,8 +69,7 @@ class AccountPage extends ConsumerWidget {
                         double.parse(weightInputField.controller.text));
                     ref.read(userData).updateProteinRatio(
                         double.parse(proteinratioInputField.controller.text));
-                    // ignore: unused_result
-                    ref.refresh(userData);
+                    ref.invalidate(userData);
                     Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(

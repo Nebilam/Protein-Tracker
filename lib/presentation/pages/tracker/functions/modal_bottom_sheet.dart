@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myapp/core/riverpod/riverpod.dart';
 
-late final id;
+late final String id;
 late final String name;
 late final String mealType;
-late final num weight; // TODO: Check if surely double
-late final num proteinDensity; // TODO: Check if surely double
+late final num weight;
+late final num proteinDensity;
 
 void customModelBottomSheet({
   required BuildContext context,
   required WidgetRef ref,
-  required id,
+  required String id,
   required String name,
   required String mealType,
   required num weight,
@@ -21,11 +21,18 @@ void customModelBottomSheet({
     IconButton(
         onPressed: () {
           ref.read(mealData).cloneAdd(mealType, name, proteinDensity, weight);
+          Navigator.pop(context);
         },
         icon: const Icon(Icons.copy)),
     IconButton(onPressed: () {}, icon: const Icon(Icons.add)),
     IconButton(onPressed: () {}, icon: const Icon(Icons.edit_outlined)),
-    IconButton(onPressed: () {}, icon: const Icon(Icons.delete_outline)),
+    IconButton(
+        onPressed: () {
+          ref.read(mealDataOptions).delete('${mealType}_list', id);
+          Navigator.pop(context);
+          ref.invalidate(mealDataOptions);
+        },
+        icon: const Icon(Icons.delete_outline)),
   ];
   List<Text> labelList = const <Text>[
     Text('Clone Add'),
@@ -64,4 +71,5 @@ void customModelBottomSheet({
       );
     },
   );
+  ref.invalidate(mealData);
 }

@@ -98,11 +98,9 @@ class Profile extends ConsumerWidget {
                               ref.read(userData).updateGoalIntake(
                                   (proteinRatio * weight).round());
                               sleep(const Duration(milliseconds: 250));
-                              // ignore: unused_result
-                              ref.refresh(userData);
+                              ref.invalidate(userData);
                               Navigator.of(context).pop();
-                              // ignore: unused_result
-                              ref.refresh(userData);
+                              ref.invalidate(userData);
                             },
                           );
                         });
