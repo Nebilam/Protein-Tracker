@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myapp/common/widgets/buttons/floating_add_button.dart';
 import 'package:myapp/common/widgets/future/future_widget.dart';
 import 'package:myapp/presentation/pages/tracker/widgets/dialog.dart';
 import 'package:myapp/presentation/pages/tracker/widgets/favourites_listview_builder.dart';
@@ -76,23 +77,18 @@ class FavouritesList extends ConsumerWidget {
                         )
                       ],
                     )),
-                Positioned(
-                  bottom: 0,
-                  right: 0,
-                  child: FloatingActionButton(
-                      tooltip: "Add new favourite",
-                      onPressed: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return FavouriteDialog(
-                            actionType: ActionType.add,
-                            title: "Add new favourite",
-                            mealType: mealType,
-                          );
-                        }));
-                      },
-                      child: const Icon(Icons.add)),
-                ),
+                FloatingAddButton(
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return FavouriteDialog(
+                        actionType: ActionType.add,
+                        title: "Add new favourite",
+                        mealType: mealType,
+                      );
+                    }));
+                  },
+                )
               ],
             ),
           );
