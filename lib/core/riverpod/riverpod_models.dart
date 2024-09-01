@@ -9,13 +9,13 @@ class UserData extends ChangeNotifier {
         .update({'username': newName}).eq('id', supabase.auth.currentUser!.id);
   }
 
-  void updateWeight(double newWeight) async {
+  void updateWeight(num newWeight) async {
     await supabase
         .from('profiles')
         .update({'weight': newWeight}).eq('id', supabase.auth.currentUser!.id);
   }
 
-  void updateProteinRatio(double newRatio) async {
+  void updateProteinRatio(num newRatio) async {
     await supabase.from('profiles').update({'protein_ratio': newRatio}).eq(
         'id', supabase.auth.currentUser!.id);
   }
