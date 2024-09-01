@@ -50,7 +50,7 @@ class FavouritesListviewBuilder extends ConsumerWidget {
         return Padding(
           padding: const EdgeInsets.symmetric(vertical: 5),
           child: ListTile(
-            title: Text(item['name']),
+            title: Text(item['name'], style: const TextStyle(fontSize: 18)),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: subtitles1,

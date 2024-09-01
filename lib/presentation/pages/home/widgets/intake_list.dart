@@ -71,7 +71,8 @@ class IntakeList extends ConsumerWidget {
                   children: [
                     Card(
                       child: ListTile(
-                        title: Text(item['name']),
+                        title: Text(item['name'],
+                            style: const TextStyle(fontSize: 18)),
                         subtitle: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: subtitles,
