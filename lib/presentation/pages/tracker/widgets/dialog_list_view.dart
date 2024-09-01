@@ -72,6 +72,7 @@ class DialogListView extends ConsumerWidget {
                   double.parse(weightInputField.controller.text),
                   double.parse(proteinDensityInputField.controller.text) /
                       100.toDouble());
+              Navigator.pop(context);
             } else if (actionType == ActionType.customAdd) {
               ref.read(mealData).cloneAdd(
                     mealType,
@@ -80,10 +81,10 @@ class DialogListView extends ConsumerWidget {
                         100.toDouble(),
                     double.parse(weightInputField.controller.text),
                   );
+              Navigator.pop(context);
             }
             ref.invalidate(mealDataOptions);
 
-            Navigator.pop(context);
             Navigator.pop(context);
             ref.invalidate(mealDataOptions);
           },
