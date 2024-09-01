@@ -1,6 +1,7 @@
 // TODO: turn this into a class
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myapp/common/functions/delete_dialog.dart';
 import 'package:myapp/core/riverpod/riverpod.dart';
 import 'package:myapp/presentation/pages/tracker/widgets/dialog.dart';
 
@@ -52,9 +53,16 @@ void customModelBottomSheet({
         icon: const Icon(Icons.edit_outlined)),
     IconButton(
         onPressed: () {
-          ref.read(mealDataOptions).delete('${mealType}_list', id);
-          Navigator.pop(context);
-          ref.invalidate(mealDataOptions);
+          deleteDialog(
+            mealType: '${mealType}_list',
+            provider: mealDataOptions,
+            context: context,
+            id: id,
+            ref: ref,
+            extraAction: () {
+              Navigator.pop(context);
+            },
+          );
         },
         icon: const Icon(Icons.delete_outline)),
   ];

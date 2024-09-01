@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myapp/common/functions/delete_dialog.dart';
 import 'package:myapp/presentation/pages/tracker/functions/modal_bottom_sheet.dart';
 import 'package:myapp/core/riverpod/riverpod.dart';
-import 'package:myapp/main.dart';
 
 class FavouritesListviewBuilder extends ConsumerWidget {
   final List list;
@@ -67,35 +67,12 @@ class FavouritesListviewBuilder extends ConsumerWidget {
               );
             },
             onLongPress: () async {
-              showDialog(
+              deleteDialog(
                 context: context,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    title: const Text('Confirm Delete'),
-                    content: const Text(
-                        'Are you sure you want to delete this item?'),
-                    actions: [
-                      TextButton(
-                        child: const Text('Cancel'),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                      ),
-                      TextButton(
-                        child: const Text('Delete'),
-                        onPressed: () async {
-                          await supabase
-                              .from('${mealType}_list')
-                              .delete()
-                              .eq('id', item['id']);
-                          // ignore: use_build_context_synchronously
-                          Navigator.of(context).pop();
-                          ref.invalidate(mealDataOptions);
-                        },
-                      ),
-                    ],
-                  );
-                },
+                id: item['id'],
+                ref: ref,
+                mealType: "${mealType}_list",
+                provider: mealDataOptions,
               );
             },
             shape: RoundedRectangleBorder(
