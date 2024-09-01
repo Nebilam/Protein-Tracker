@@ -14,7 +14,7 @@ class PasswordInputField extends StatelessWidget {
       controller: passwordController,
       passwordConstraint: r'.{6,}',
       passwordDecoration: PasswordDecoration(),
-      hintText: 'Password',
+      hintText: hint,
       border: PasswordBorder(
         border: OutlineInputBorder(
           borderSide: const BorderSide(),

@@ -1,11 +1,10 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-
-import '../../presentation/pages/home/home.dart';
-import '../../presentation/pages/tracker/tracker.dart';
-import '../../presentation/pages/statistics/statistics.dart';
-import '../../presentation/pages/settings/settings.dart';
+import 'package:myapp/presentation/pages/home/home.dart';
+import 'package:myapp/presentation/pages/tracker/tracker.dart';
+import 'package:myapp/presentation/pages/statistics/statistics.dart';
+import 'package:myapp/presentation/pages/settings/settings.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

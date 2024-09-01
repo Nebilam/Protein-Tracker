@@ -1,0 +1,108 @@
+// TODO: turn this into a class
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myapp/common/functions/delete_dialog.dart';
+import 'package:myapp/core/riverpod/riverpod.dart';
+import 'package:myapp/presentation/pages/tracker/widgets/dialog.dart';
+
+late final String id;
+late final String name;
+late final String mealType;
+late final num weight;
+late final num proteinDensity;
+
+void customModelBottomSheet({
+  required BuildContext context,
+  required WidgetRef ref,
+  required String id,
+  required String name,
+  required String mealType,
+  required num weight,
+  required num proteinDensity,
+}) {
+  List<Widget> buttonList = <Widget>[
+    IconButton(
+        onPressed: () {
+          ref.read(mealData).cloneAdd(mealType, name, proteinDensity, weight);
+          Navigator.pop(context);
+        },
+        icon: const Icon(Icons.copy)),
+    IconButton(
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return FavouriteDialog(
+              actionType: ActionType.customAdd,
+              title: 'Add',
+              mealType: mealType,
+              id: id,
+            );
+          }));
+        },
+        icon: const Icon(Icons.add)),
+    IconButton(
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return FavouriteDialog(
+              actionType: ActionType.edit,
+              title: 'Edit',
+              mealType: mealType,
+              id: id,
+            );
+          }));
+        },
+        icon: const Icon(Icons.edit_outlined)),
+    IconButton(
+        onPressed: () {
+          deleteDialog(
+            mealType: '${mealType}_list',
+            provider: mealDataOptions,
+            context: context,
+            id: id,
+            ref: ref,
+            extraAction: () {
+              Navigator.pop(context);
+            },
+          );
+        },
+        icon: const Icon(Icons.delete_outline)),
+  ];
+  List<Text> labelList = const <Text>[
+    Text('Clone Add'),
+    Text('Custom Add'),
+    Text('Edit'),
+    Text('Delete'),
+  ];
+
+  buttonList = List.generate(
+      buttonList.length,
+      (index) => Padding(
+            padding: const EdgeInsets.fromLTRB(15.0, 30.0, 15.0, 20.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                buttonList[index],
+                labelList[index],
+              ],
+            ),
+          ));
+
+  showModalBottomSheet(
+    showDragHandle: true,
+    context: context,
+    builder: (context) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+        child: SizedBox(
+          height: 150,
+          child: ListView(
+            shrinkWrap: true,
+            scrollDirection: Axis.horizontal,
+            children: buttonList,
+          ),
+        ),
+      );
+    },
+  );
+  ref.invalidate(mealData);
+  ref.invalidate(mealDataOptions);
+}

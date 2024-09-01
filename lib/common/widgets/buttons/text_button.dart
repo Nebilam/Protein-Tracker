@@ -11,8 +11,8 @@ class ButtonText extends StatelessWidget {
 
   const ButtonText({
     super.key,
-    required this.onPressed,
     required this.text,
+    required this.onPressed,
     this.horizontalPadding = 10,
     this.verticalPadding = 13,
     this.style = Style.primary,
@@ -20,9 +20,9 @@ class ButtonText extends StatelessWidget {
 
   Color getColor(BuildContext context) {
     if (style == Style.primary) {
-      return Theme.of(context).colorScheme.inversePrimary;
+      return Theme.of(context).colorScheme.primaryContainer;
     } else {
-      return Theme.of(context).colorScheme.onSecondary;
+      return Theme.of(context).colorScheme.secondaryContainer;
     }
   }
 
