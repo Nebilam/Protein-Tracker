@@ -1,76 +1,90 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myapp/common/widgets/buttons/text_button.dart';
 import 'package:myapp/common/widgets/future/future_widget.dart';
 import 'package:myapp/common/widgets/input_fields/input_field.dart';
 import 'package:myapp/core/riverpod/riverpod.dart';
+import 'package:myapp/presentation/pages/tracker/widgets/dialog_list_view.dart';
+
+enum ActionType { add, edit, customAdd }
 
 class FavouriteDialog extends ConsumerWidget {
+  final ActionType actionType;
   final String title;
   final String mealType;
+  final String id;
 
-  const FavouriteDialog(
-      {super.key, required this.title, required this.mealType});
+  const FavouriteDialog({
+    super.key,
+    required this.actionType,
+    required this.title,
+    required this.mealType,
+    this.id = 'empty',
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final weightInputField = InputField(hint: "Weight");
-    final proteinDensityInputField = InputField(hint: "Protein Percentage");
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(title),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 20),
-        child: CustomFutureBuilder(
-            future: ref.watch(mealDataOptions).breakfastData,
-            builder: (context, data) {
-              TextEditingController nameController = TextEditingController();
-              nameController.text = data[0]['name'];
-              final nameInputField = InputField(
-                hint: "Name",
-                controller: nameController,
-              );
+    if (actionType == ActionType.add) {
+      return Scaffold(
+          appBar: AppBar(
+            title: Text(title),
+          ),
+          body: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20),
+              child: DialogListView(
+                actionType: actionType,
+                title: title,
+                mealType: mealType,
+                nameInputField: InputField(hint: "Name"),
+                weightInputField: InputField(hint: "Weight"),
+                proteinDensityInputField:
+                    InputField(hint: "Protein Percentage"),
+              )));
+    } else {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text(title),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 20),
+          child: CustomFutureBuilder(
+              future: ref.read(mealDataOptions).getItem(mealType, id),
+              builder: (context, data) {
+                TextEditingController nameController = TextEditingController();
+                nameController.text = data[0]['name'];
+                final nameInputField = InputField(
+                  hint: "Name",
+                  controller: nameController,
+                );
 
-              return ListView(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: nameInputField,
-                  ),
-                  const SizedBox(
-                    height: 12,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Row(children: [
-                      Expanded(child: weightInputField),
-                      const SizedBox(width: 12),
-                      Expanded(child: proteinDensityInputField),
-                    ]),
-                  ),
-                  const SizedBox(
-                    height: 12,
-                  ),
-                  ButtonText(
-                    text: title,
-                    onPressed: () {
-                      ref.read(mealDataOptions).addNew(
-                          mealType,
-                          nameInputField.controller.text.toString(),
-                          double.parse(weightInputField.controller.text),
-                          double.parse(
-                                  proteinDensityInputField.controller.text) /
-                              100.toDouble());
-                      ref.invalidate(mealDataOptions);
+                TextEditingController weightController =
+                    TextEditingController();
+                weightController.text = data[0]['weight'].toString();
+                final weightInputField = InputField(
+                  hint: "Weight",
+                  controller: weightController,
+                );
 
-                      Navigator.pop(context);
-                    },
-                  )
-                ],
-              );
-            }),
-      ),
-    );
+                TextEditingController proteinDensityController =
+                    TextEditingController();
+                proteinDensityController.text =
+                    (data[0]['protein_density'] * 100).toString();
+                final proteinDensityInputField = InputField(
+                  hint: "Protein Percentage",
+                  controller: proteinDensityController,
+                );
+
+                return DialogListView(
+                  actionType: actionType,
+                  title: title,
+                  id: id,
+                  mealType: mealType,
+                  nameInputField: nameInputField,
+                  weightInputField: weightInputField,
+                  proteinDensityInputField: proteinDensityInputField,
+                );
+              }),
+        ),
+      );
+    }
   }
 }

@@ -26,11 +26,27 @@ void customModelBottomSheet({
           Navigator.pop(context);
         },
         icon: const Icon(Icons.copy)),
-    IconButton(onPressed: () {}, icon: const Icon(Icons.add)),
     IconButton(
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return FavouriteDialog(title: 'Edit', mealType: mealType);
+            return FavouriteDialog(
+              actionType: ActionType.customAdd,
+              title: 'Add',
+              mealType: mealType,
+              id: id,
+            );
+          }));
+        },
+        icon: const Icon(Icons.add)),
+    IconButton(
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return FavouriteDialog(
+              actionType: ActionType.edit,
+              title: 'Edit',
+              mealType: mealType,
+              id: id,
+            );
           }));
         },
         icon: const Icon(Icons.edit_outlined)),
@@ -80,4 +96,5 @@ void customModelBottomSheet({
     },
   );
   ref.invalidate(mealData);
+  ref.invalidate(mealDataOptions);
 }

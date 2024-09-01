@@ -85,6 +85,7 @@ class FavouritesList extends ConsumerWidget {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
                           return FavouriteDialog(
+                            actionType: ActionType.add,
                             title: "Add new favourite",
                             mealType: mealType,
                           );

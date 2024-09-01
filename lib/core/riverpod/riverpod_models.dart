@@ -118,6 +118,23 @@ class MealDataOptions extends ChangeNotifier {
     });
   }
 
+  void update(String mealType, String? id, String? name, num? weight,
+      num? proteinDensity) async {
+    await supabase.from("${mealType}_list").update({
+      'name': name,
+      'weight': weight,
+      'protein_density': proteinDensity
+    }).eq('id', id!);
+  }
+
+  Future<PostgrestList> getItem(String mealType, String id) async {
+    return await supabase
+        .from("${mealType}_list")
+        .select('*')
+        .eq('user_id', userId)
+        .eq('id', id);
+  }
+
   late final breakfastData =
       supabase.from('breakfast_list').select('*').eq('user_id', userId);
   late final lunchData =
