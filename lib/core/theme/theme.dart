@@ -6,10 +6,10 @@ class ThemedMaterialApp extends StatelessWidget {
   const ThemedMaterialApp({super.key, this.home});
 
   static final _defaultLightColorScheme =
-      ColorScheme.fromSwatch(primarySwatch: Colors.blue);
+      ColorScheme.fromSeed(seedColor: Colors.blue);
 
-  static final _defaultDarkColorScheme = ColorScheme.fromSwatch(
-      primarySwatch: Colors.blue, brightness: Brightness.dark);
+  static final _defaultDarkColorScheme =
+      ColorScheme.fromSeed(seedColor: Colors.blue, brightness: Brightness.dark);
 
   @override
   Widget build(BuildContext context) {
