@@ -35,9 +35,8 @@ class FavouriteDialog extends ConsumerWidget {
                 title: title,
                 mealType: mealType,
                 nameInputField: InputField(hint: "Name"),
-                weightInputField: InputField(hint: "Weight"),
-                proteinDensityInputField:
-                    InputField(hint: "Protein Percentage"),
+                weightInputField: InputField(hint: "Weight (g)"),
+                proteinDensityInputField: InputField(hint: "Protein % (%)"),
               )));
     } else {
       return Scaffold(
@@ -60,7 +59,7 @@ class FavouriteDialog extends ConsumerWidget {
                     TextEditingController();
                 weightController.text = data[0]['weight'].toString();
                 final weightInputField = InputField(
-                  hint: "Weight",
+                  hint: "Weight (g)",
                   controller: weightController,
                 );
 
@@ -69,7 +68,7 @@ class FavouriteDialog extends ConsumerWidget {
                 proteinDensityController.text =
                     (data[0]['protein_density'] * 100).toString();
                 final proteinDensityInputField = InputField(
-                  hint: "Protein Percentage",
+                  hint: "Protein % (%)",
                   controller: proteinDensityController,
                 );
 
