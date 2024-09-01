@@ -38,6 +38,7 @@ class _HomePageState extends State<HomePage> {
             NavigationDestination(
               icon: Icon(Icons.settings),
               label: "Settings",
+              enabled: false,
             ),
           ],
           selectedIndex: currentPageIndex,
