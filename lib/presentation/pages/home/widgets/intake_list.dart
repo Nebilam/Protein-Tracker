@@ -65,49 +65,56 @@ class IntakeList extends ConsumerWidget {
                 }
               });
 
-              return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 5),
-                child: ListTile(
-                  title: Text(item['name']),
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: subtitles,
-                  ),
-                  onLongPress: () async {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: const Text('Confirm Delete'),
-                          content: const Text(
-                              'Are you sure you want to delete this item?'),
-                          actions: [
-                            TextButton(
-                              child: const Text('Cancel'),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                            TextButton(
-                              child: const Text('Delete'),
-                              onPressed: () {
-                                ref
-                                    .read(mealData)
-                                    .delete(intakeListString, item['id']);
-                                // ignore: use_build_context_synchronously
-                                Navigator.of(context).pop();
-                                ref.invalidate(mealData);
-                              },
-                            ),
-                          ],
-                        );
-                      },
-                    );
-                  },
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  tileColor: Theme.of(context).colorScheme.secondaryContainer,
+              return SingleChildScrollView(
+                physics: const ScrollPhysics(),
+                child: Column(
+                  children: [
+                    Card(
+                      child: ListTile(
+                        title: Text(item['name']),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: subtitles,
+                        ),
+                        onLongPress: () async {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: const Text('Confirm Delete'),
+                                content: const Text(
+                                    'Are you sure you want to delete this item?'),
+                                actions: [
+                                  TextButton(
+                                    child: const Text('Cancel'),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                  TextButton(
+                                    child: const Text('Delete'),
+                                    onPressed: () {
+                                      ref
+                                          .read(mealData)
+                                          .delete(intakeListString, item['id']);
+                                      // ignore: use_build_context_synchronously
+                                      Navigator.of(context).pop();
+                                      ref.invalidate(mealData);
+                                    },
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        },
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        tileColor:
+                            Theme.of(context).colorScheme.secondaryContainer,
+                      ),
+                    ),
+                  ],
                 ),
               );
             },
